@@ -22,6 +22,22 @@ def main() -> None:
     scheduler.add_job(run_job, "interval", days=7, next_run_time=datetime.now())
 
     print("Scheduler started. Running every 7 days.")
+
+    # Start a simple heartbeat server for Render
+    import http.server
+    import socketserver
+    import threading
+    import os
+
+    def run_heartbeat():
+        port = int(os.environ.get("PORT", 8080))
+        handler = http.server.SimpleHTTPRequestHandler
+        with socketserver.TCPServer(("", port), handler) as httpd:
+            print(f"Heartbeat server running on port {port}")
+            httpd.serve_forever()
+
+    threading.Thread(target=run_heartbeat, daemon=True).start()
+
     try:
         scheduler.start()
     except (KeyboardInterrupt, SystemExit):
