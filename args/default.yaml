@@ -1,0 +1,11 @@
+﻿# Args (Behavior Settings)
+# This file controls runtime behavior without editing goals or tools.
+# Update values as needed for the current session.
+
+mode: default
+output_length: medium
+voice: neutral
+frameworks:
+  - GOTCHA
+timezone: local
+checklists: true
