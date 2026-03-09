@@ -39,9 +39,7 @@ export default async function Page() {
           Centralize UV LED research, benchmarks, and expert community responses in
           one continuously updated workspace.
         </p>
-        <p>
-          Supabase status: {supabaseReady ? "Configured" : "Not configured"}
-        </p>
+
       </section>
 
       <section className="live-data">
@@ -70,6 +68,9 @@ export default async function Page() {
 
       <section className="footer">
         <p>Currently monitoring <strong>{totalCount}</strong> research items in the pipeline.</p>
+        <p>
+          Supabase status: {supabaseReady ? "Configured" : "Not configured"}
+        </p>
       </section>
     </main>
   );
