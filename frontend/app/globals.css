@@ -90,6 +90,12 @@ a {
   margin-top: 56px;
   color: var(--muted);
   font-size: 0.9rem;
+  display: grid;
+  gap: 8px;
+}
+
+.footer strong {
+  color: var(--accent);
 }
 
 .full-width {
@@ -103,7 +109,34 @@ a {
 .markdown-content {
   white-space: pre-wrap;
   font-family: inherit;
-  line-height: 1.6;
+  line-height: 1.7;
+  font-size: 0.95rem;
+}
+
+/* Mobile-Specific Styles */
+@media (max-width: 768px) {
+  .page {
+    padding: 32px 16px 48px;
+  }
+
+  .hero {
+    gap: 16px;
+    margin-bottom: 32px;
+  }
+
+  .hero h1 {
+    font-size: 2.25rem;
+  }
+
+  .card {
+    padding: 16px;
+    min-height: auto;
+  }
+
+  .markdown-content {
+    font-size: 0.9rem;
+    line-height: 1.6;
+  }
 }
 
 .research-list {
@@ -113,17 +146,18 @@ a {
 }
 
 .research-item {
-  margin-bottom: 1rem;
-  padding-bottom: 0.5rem;
+  margin-bottom: 1.25rem;
+  padding-bottom: 0.75rem;
   border-bottom: 1px solid rgba(255, 255, 255, 0.1);
 }
 
 .research-item a {
   display: block;
   font-weight: 500;
-  margin-bottom: 0.25rem;
+  margin-bottom: 0.5rem;
   color: var(--accent);
   text-decoration: none;
+  line-height: 1.4;
 }
 
 .research-item a:hover {
@@ -131,8 +165,11 @@ a {
 }
 
 .source-tag {
-  font-size: 0.75rem;
-  opacity: 0.7;
+  font-size: 0.7rem;
+  opacity: 0.6;
   text-transform: uppercase;
   letter-spacing: 0.05em;
+  background: rgba(34, 211, 238, 0.1);
+  padding: 2px 6px;
+  border-radius: 4px;
 }
