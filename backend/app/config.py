@@ -17,6 +17,8 @@ DEFAULT_KEYWORDS: List[str] = [
     "thermal management",
     "wall-plug efficiency",
     "reliability",
+    "patents",
+    "intellectual property",
 ]
 
 
