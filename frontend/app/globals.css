@@ -184,13 +184,42 @@ a {
   margin-top: 4px;
 }
 
+/* Dashbord Charts & Scales */
+.graph-wrapper {
+  display: flex;
+  gap: 12px;
+  align-items: stretch;
+  margin-top: 1rem;
+}
+
+.graph-y-axis {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  font-size: 0.7rem;
+  color: var(--muted);
+  padding: 4px 0;
+  border-right: 1px solid rgba(255, 255, 255, 0.1);
+  padding-right: 8px;
+  text-align: right;
+  min-width: 25px;
+}
+
 .graph-container {
   height: 120px;
-  width: 100%;
-  margin-top: 1rem;
+  flex: 1;
   display: flex;
   align-items: flex-end;
   gap: 4px;
+  position: relative;
+}
+
+.graph-grid-line {
+  position: absolute;
+  left: 0;
+  right: 0;
+  border-top: 1px dashed rgba(255, 255, 255, 0.05);
+  pointer-events: none;
 }
 
 .graph-bar {
@@ -198,11 +227,39 @@ a {
   background: linear-gradient(to top, var(--accent), var(--accent-2));
   border-radius: 4px 4px 0 0;
   opacity: 0.6;
-  transition: opacity 0.3s;
+  transition: all 0.3s ease;
+  position: relative;
 }
 
 .graph-bar:hover {
   opacity: 1;
+  transform: scaleY(1.05);
+}
+
+.update-date {
+  font-size: 0.75rem;
+  color: var(--muted);
+  margin-top: 1.5rem;
+  padding-top: 1rem;
+  border-top: 1px solid rgba(255, 255, 255, 0.1);
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.patent-card {
+  border-left: 4px solid #facc15;
+  /* Gold/Amber for IP */
+}
+
+.patent-badge {
+  font-size: 0.65rem;
+  background: rgba(250, 204, 21, 0.15);
+  color: #facc15;
+  padding: 1px 6px;
+  border-radius: 4px;
+  margin-left: 8px;
+  border: 1px solid rgba(250, 204, 21, 0.2);
 }
 
 /* Mobile-Specific Styles */
