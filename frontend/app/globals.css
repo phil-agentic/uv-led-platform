@@ -111,21 +111,113 @@ a {
   font-family: inherit;
   line-height: 1.7;
   font-size: 0.95rem;
+  overflow-wrap: break-word;
+  word-break: break-word;
+}
+
+.card-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 1rem;
+}
+
+.live-badge {
+  font-size: 0.7rem;
+  background: rgba(239, 68, 68, 0.2);
+  color: #ef4444;
+  padding: 2px 8px;
+  border-radius: 99px;
+  text-transform: uppercase;
+  font-weight: 700;
+  letter-spacing: 0.05em;
+  border: 1px solid rgba(239, 68, 68, 0.3);
+}
+
+.stat-icon {
+  color: var(--muted);
+  margin-bottom: 8px;
+  opacity: 0.5;
+}
+
+.markdown-content a {
+  color: var(--accent);
+  text-decoration: underline;
+}
+
+.markdown-content p {
+  margin-bottom: 1rem;
+}
+
+.markdown-content ul,
+.markdown-content ol {
+  margin-left: 1.5rem;
+  margin-bottom: 1rem;
+}
+
+/* Dashboard Extras */
+.stats-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+  gap: 16px;
+  margin-bottom: 2rem;
+}
+
+.stat-card {
+  background: var(--bg-accent);
+  border: 1px solid rgba(255, 255, 255, 0.05);
+  padding: 16px;
+  border-radius: 12px;
+  text-align: center;
+}
+
+.stat-value {
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: var(--accent);
+}
+
+.stat-label {
+  font-size: 0.8rem;
+  color: var(--muted);
+  text-transform: uppercase;
+  margin-top: 4px;
+}
+
+.graph-container {
+  height: 120px;
+  width: 100%;
+  margin-top: 1rem;
+  display: flex;
+  align-items: flex-end;
+  gap: 4px;
+}
+
+.graph-bar {
+  flex: 1;
+  background: linear-gradient(to top, var(--accent), var(--accent-2));
+  border-radius: 4px 4px 0 0;
+  opacity: 0.6;
+  transition: opacity 0.3s;
+}
+
+.graph-bar:hover {
+  opacity: 1;
 }
 
 /* Mobile-Specific Styles */
 @media (max-width: 768px) {
   .page {
-    padding: 32px 16px 48px;
+    padding: 24px 16px 48px;
   }
 
   .hero {
-    gap: 16px;
-    margin-bottom: 32px;
+    gap: 12px;
+    margin-bottom: 24px;
   }
 
   .hero h1 {
-    font-size: 2.25rem;
+    font-size: 1.85rem;
   }
 
   .card {
@@ -134,8 +226,17 @@ a {
   }
 
   .markdown-content {
-    font-size: 0.9rem;
-    line-height: 1.6;
+    font-size: 0.85rem;
+    line-height: 1.5;
+  }
+
+  .stats-grid {
+    grid-template-columns: 1fr 1fr;
+    gap: 12px;
+  }
+
+  .stat-value {
+    font-size: 1.25rem;
   }
 }
 
