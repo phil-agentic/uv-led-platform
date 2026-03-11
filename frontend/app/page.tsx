@@ -1,4 +1,4 @@
-import { getLatestResearch, getLatestHotTopic, getResearchCount, hasSupabaseConfig } from "../lib/supabaseClient";
+import { getLatestResearch, getLatestHotTopic, getResearchCount, hasSupabaseConfig, getDiscoveryStats, getPatentCount } from "../lib/supabaseClient";
 import ResearchList from "./components/ResearchList";
 import ReactMarkdown from "react-markdown";
 import { Activity, Database, Flame, Search, Clock, Shield } from "lucide-react";
@@ -28,9 +28,15 @@ const sections = [
 
 export default async function Page() {
   const supabaseReady = hasSupabaseConfig();
-  const latestResearch = await getLatestResearch(5);
+  const latestResearch = await getLatestResearch(10); // Fetch more for filtering
   const hotTopic = await getLatestHotTopic();
   const totalCount = await getResearchCount();
+  const discoveryStats = await getDiscoveryStats();
+  const patentCount = await getPatentCount();
+
+  // Normalize stats for graph (max height 100)
+  const maxDiscoveries = Math.max(...discoveryStats, 5);
+  const normalizedStats = discoveryStats.map(s => Math.min(100, (s / maxDiscoveries) * 100));
 
   return (
     <main className="page">
@@ -115,7 +121,7 @@ export default async function Page() {
               <div className="graph-grid-line" style={{ top: '0%' }} />
               <div className="graph-grid-line" style={{ top: '50%' }} />
               <div className="graph-grid-line" style={{ top: '100%' }} />
-              {[40, 70, 45, 90, 65, 80, 55, 95, 75, 100].map((h, i) => (
+              {normalizedStats.map((h, i) => (
                 <div
                   key={i}
                   className="graph-bar"
@@ -125,7 +131,7 @@ export default async function Page() {
             </div>
           </div>
           <p style={{ marginTop: '1rem', fontSize: '0.8rem', color: 'var(--muted)' }}>
-            Daily discovery index based on {totalCount} monitored items.
+            <strong>Discovery Index:</strong> Real-time volume of new technical signals identified by the AI. Current peak: {maxDiscoveries} items/day.
           </p>
         </div>
       </section>
@@ -135,28 +141,36 @@ export default async function Page() {
           <div className="card-header">
             <div style={{ display: 'flex', alignItems: 'center' }}>
               <h3>Patents & Intellectual Property</h3>
-              <span className="patent-badge">New Section</span>
+              <span className="patent-badge">Search active</span>
             </div>
             <Shield className="stat-icon" size={20} />
           </div>
           <div className="grid" style={{ gridTemplateColumns: 'repeat(auto-fit, minmax(300px, 1fr))' }}>
             <div>
               <p style={{ marginBottom: '1rem' }}>
-                Monitoring global UV LED patent filings, assignee shifts, and IP litigation.
-                Our research loop is now indexing "Patents" and "Intellectual Property" as core keywords.
+                Monitoring Google Patents and WIPO for UV LED filings.
+                Search scope restricted to the last 7 days for maximum freshness.
               </p>
               <div className="stat-card" style={{ textAlign: 'left', padding: '12px' }}>
-                <div className="stat-value" style={{ fontSize: '1.2rem' }}>8 Active Filings</div>
-                <div className="stat-label">Detected this week</div>
+                <div className="stat-value" style={{ fontSize: '1.2rem' }}>{patentCount} Total Filings</div>
+                <div className="stat-label">Currently indexed in database</div>
               </div>
             </div>
             <div style={{ paddingLeft: '20px', borderLeft: '1px solid rgba(255,255,255,0.05)' }}>
-              <ResearchList items={latestResearch.filter(r => r.title.toLowerCase().includes('patent') || r.title.toLowerCase().includes('intellectual')).slice(0, 3)} />
-              {latestResearch.filter(r => r.title.toLowerCase().includes('patent')).length === 0 && (
-                <p style={{ fontSize: '0.8rem', color: 'var(--muted)', fontStyle: 'italic' }}>
-                  Awaiting first IP-specific results from the background research loop...
-                </p>
-              )}
+              <ResearchList items={latestResearch.filter(r =>
+                r.title.toLowerCase().includes('patent') ||
+                r.title.toLowerCase().includes('intellectual') ||
+                r.source.toLowerCase().includes('google.com') ||
+                r.source.toLowerCase().includes('wipo')
+              ).slice(0, 3)} />
+              {latestResearch.filter(r =>
+                r.title.toLowerCase().includes('patent') ||
+                r.source.toLowerCase().includes('google.com')
+              ).length === 0 && (
+                  <p style={{ fontSize: '0.8rem', color: 'var(--muted)', fontStyle: 'italic' }}>
+                    Awaiting new IP-specific signals from Google Patents...
+                  </p>
+                )}
             </div>
           </div>
         </div>

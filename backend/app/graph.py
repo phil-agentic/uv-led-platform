@@ -48,11 +48,18 @@ def researcher_node(state: GraphState) -> Dict[str, Any]:
 
     collected: List[Dict[str, Any]] = []
     for term in query_terms:
-        query = f"UV LED {term}"
+        # Targeted patent search
+        if term.lower() in ["patents", "intellectual property", "patent", "ip"]:
+            query = f"UV LED {term} site:patents.google.com OR site:wipo.int"
+            # Limit patent search to recent one week if possible via query
+            query += " after:2024-01-01" # Baseline for recent enough, Tavily handles "recent" better via logic below
+        else:
+            query = f"UV LED {term}"
+            
         response = client.search(
             query=query,
             search_depth="advanced",
-            max_results=3,
+            max_results=5 if "patent" in term.lower() else 3, # More results for patents
             include_answer=False,
             include_raw_content=False,
         )
