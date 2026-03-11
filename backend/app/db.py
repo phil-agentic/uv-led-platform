@@ -80,3 +80,31 @@ def fetch_recent_benchmarks(limit: int = 10) -> List[Dict[str, Any]]:
         .execute()
     )
     return response.data or []
+
+
+def fetch_discovery_stats() -> List[Dict[str, Any]]:
+    """
+    Fetch counts of new research items per day for the last 10 days.
+    """
+    supabase = get_supabase()
+    response = (
+        supabase.table("research_items")
+        .select("created_at")
+        .order("created_at", desc=True)
+        .execute()
+    )
+    return response.data or []
+
+
+def fetch_patent_count() -> int:
+    """
+    Fetch the count of research items that are patents.
+    """
+    supabase = get_supabase()
+    response = (
+        supabase.table("research_items")
+        .select("id", count="exact")
+        .or_("title.ilike.%patent%,title.ilike.%intellectual property%,source.ilike.%google.com%,source.ilike.%wipo%")
+        .execute()
+    )
+    return response.count or 0
